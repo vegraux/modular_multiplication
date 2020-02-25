@@ -32,18 +32,25 @@ def create_sliders():
     ]
 
 
+header = dbc.Jumbotron(
+    [
+        html.H1("Modular multiplication", className="display-3"),
+        html.Hr(className="my-2"),
+        html.P("Drag the sliders and see what happens!"),
+    ]
+)
+
 layout = html.Div(
     [
         html.Br(),
-        html.H1(id="header", children="Modular multiplication"),
-        html.P(id="info-text", children="Change the factor and see what happens!"),
+        header,
         dbc.Row(
             [
                 dbc.Col(
                     dcc.Graph(
                         id="circle-fig", figure=make_circle_figure(N=N, factor=FACTOR)
                     ),
-                    md=8,
+                    md=5,
                 ),
                 dbc.Col(create_sliders(), md=3),
             ]

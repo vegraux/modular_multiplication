@@ -37,7 +37,7 @@ def make_circle_figure(N=150, factor=2):
     x = np.cos(angles[:-1])
     y = np.sin(angles[:-1])
 
-    ids = [factor * i % N for i in range(N)]
+    ids = [(factor * i) % N for i in range(N)]
     for i in range(N):
         fig.add_trace(
             go.Scatter(
@@ -48,7 +48,8 @@ def make_circle_figure(N=150, factor=2):
                 line=dict(width=1),
             )
         )
-    fig.update_layout(title=f"Multiplying by {factor} on a circle with {N} points")
+    title = f"<b>Multiplying by {factor} on a circle with {N} points</b>"
+    fig.update_layout(title=title)
     return fig
 
 
