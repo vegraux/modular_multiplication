@@ -16,21 +16,10 @@ import dash_html_components as html
 from src.utils import make_circle_figure, card_factor, card_max_count
 from dash.dependencies import Input, Output
 
-
 N = 200
 FACTOR = 2
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
-
-
-def create_sliders():
-    return [
-        html.Br(),
-        html.Br(),
-        dbc.Card(card_factor, color="light", inverse=False),
-        dbc.Card(card_max_count, color="light", inverse=False),
-    ]
-
 
 header = dbc.Jumbotron(
     [
@@ -42,23 +31,26 @@ header = dbc.Jumbotron(
 
 layout = html.Div(
     [
-        html.Br(),
         header,
+        dbc.Row(
+            [
+                dbc.Col(dbc.Card(card_factor, color="light", inverse=False)),
+                dbc.Col(dbc.Card(card_max_count, color="light", inverse=False)),
+            ]
+        ),
         dbc.Row(
             [
                 dbc.Col(
                     dcc.Graph(
                         id="circle-fig", figure=make_circle_figure(N=N, factor=FACTOR)
-                    ),
-                    md=5,
-                ),
-                dbc.Col(create_sliders(), md=3),
+                    )
+                )
             ]
         ),
     ]
 )
 
-app.layout = layout
+app.layout = dbc.Container(layout)
 
 
 @app.callback(

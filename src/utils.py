@@ -11,8 +11,15 @@ import plotly.graph_objects as go
 import numpy as np
 import dash_bootstrap_components as dbc
 import dash_core_components as dcc
-
 import dash_html_components as html
+import seaborn as sns
+
+
+def array_to_rgb(array):
+    rgb_string = "rgb("
+    for value in array:
+        rgb_string += str(int(value * 255)) + ","
+    return rgb_string[:-1] + ")"
 
 
 def make_circle_figure(N=150, factor=2):
@@ -36,15 +43,16 @@ def make_circle_figure(N=150, factor=2):
     angles = np.linspace(0, 2 * np.pi, N + 1)
     x = np.cos(angles[:-1])
     y = np.sin(angles[:-1])
-
+    sns_colors = sns.cubehelix_palette(N, start=1, rot=3, dark=0.1, light=0.7)
+    marker_colors = [array_to_rgb(color) for color in sns_colors]
     ids = [(factor * i) % N for i in range(N)]
     for i in range(N):
         fig.add_trace(
-            go.Scatter(
+            go.Scattergl(
                 x=x[[i, ids[i]]],
                 y=y[[i, ids[i]]],
                 mode="lines",
-                marker_color="gray",
+                marker_color=marker_colors[i],
                 line=dict(width=1),
             )
         )

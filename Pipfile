@@ -12,8 +12,9 @@ matplotlib = "*"
 plotly = "*"
 pandas = "*"
 dash = "*"
-numba = "*"
 dash-bootstrap-components = "*"
+seaborn = "*"
+
 
 [requires]
 python_version = "3.7"
