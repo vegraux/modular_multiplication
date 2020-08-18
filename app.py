@@ -20,7 +20,7 @@ N = 200
 FACTOR = 2
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
-
+server = app.server
 header = dbc.Jumbotron(
     [
         html.H1("Modular multiplication", className="display-3"),

@@ -14,7 +14,7 @@ pandas = "*"
 dash = "*"
 dash-bootstrap-components = "*"
 seaborn = "*"
-
+gunicorn = "*"
 
 [requires]
 python_version = "3.7"

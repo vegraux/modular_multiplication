@@ -31,8 +31,8 @@ def make_circle_figure(N=150, factor=2):
     fig.update_layout(
         xaxis=dict(range=(-1.1, 1.1), zeroline=False),
         yaxis=dict(range=(-1.1, 1.1), zeroline=False),
-        height=800,
-        width=800,
+        height=1050,
+        width=1050,
         template="plotly_white",
         xaxis_showgrid=False,
         yaxis_showgrid=False,
