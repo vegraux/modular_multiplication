@@ -1,6 +1,6 @@
 # Modular multiplication
 Dash application for visualising modular multiplication
-![demo](pictures/demo.gif)
+![demo](pictures/readme_demo.gif)
 
 
 ## Install
