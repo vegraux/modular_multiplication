@@ -7,6 +7,8 @@
 __author__ = "Vegard Ulriksen Solberg"
 __email__ = "vegardsolberg@hotmail.com"
 
+from typing import List
+
 import plotly.graph_objects as go
 import numpy as np
 import dash_bootstrap_components as dbc
@@ -15,14 +17,20 @@ import dash_html_components as html
 import seaborn as sns
 
 
-def array_to_rgb(array):
+def array_to_rgb(array: List) -> str:
     rgb_string = "rgb("
     for value in array:
         rgb_string += str(int(value * 255)) + ","
     return rgb_string[:-1] + ")"
 
 
-def make_circle_figure(N=150, factor=2):
+def get_colors(N: int) -> List[str]:
+    sns_colors = sns.cubehelix_palette(N, start=1, rot=3, dark=0.1, light=0.7)
+    marker_colors = [array_to_rgb(color) for color in sns_colors]
+    return marker_colors
+
+
+def make_circle_figure(N: int = 150, factor: int = 2) -> go.Figure:
     fig = go.Figure()
     fig.add_shape(
         type="circle", x0=-1, y0=-1, x1=1, y1=1, line_color="black", layer="below"
@@ -41,16 +49,18 @@ def make_circle_figure(N=150, factor=2):
     fig.update_xaxes(tickvals=[])
     fig.update_yaxes(tickvals=[])
     angles = np.linspace(0, 2 * np.pi, N + 1)
-    x = np.cos(angles[:-1])
-    y = np.sin(angles[:-1])
-    sns_colors = sns.cubehelix_palette(N, start=1, rot=3, dark=0.1, light=0.7)
-    marker_colors = [array_to_rgb(color) for color in sns_colors]
-    ids = [(factor * i) % N for i in range(N)]
+    angles_multiplied = (angles * factor) % (2 * np.pi)
+    x, y = np.cos(angles[:-1]), np.sin(angles[:-1])
+    x_multiplied, y_multiplied = (
+        np.cos(angles_multiplied[:-1]),
+        np.sin(angles_multiplied[:-1]),
+    )
+    marker_colors = get_colors(N)
     for i in range(N):
         fig.add_trace(
             go.Scattergl(
-                x=x[[i, ids[i]]],
-                y=y[[i, ids[i]]],
+                x=[x[i], x_multiplied[i]],
+                y=[y[i], y_multiplied[i]],
                 mode="lines",
                 marker_color=marker_colors[i],
                 line=dict(width=1),
@@ -73,7 +83,7 @@ card_factor = [
                 id="factor-slider",
                 min=2,
                 max=200,
-                step=1,
+                step=0.1,
                 value=2,
                 marks={k: str(k) for k in range(10, 201, 20)},
             ),
