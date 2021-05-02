@@ -1,0 +1,61 @@
+[tool.poetry]
+name = "modular_multiplication"
+version = "0.0.0"
+description = "App for visualizing modular multiplication on a circle"
+authors = ["Vegard Solberg <vegardsolberg@hotmail.no>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+numpy = "*"
+plotly = "*"
+python-dotenv = "*"
+dash = "*"
+dash-bootstrap-components = "*"
+seaborn = "*"
+gunicorn = "*"
+
+[tool.poetry.dev-dependencies]
+black = { version = "*", allow-prereleases = true }
+coverage = { version = "*", extras = ['toml'] }
+flake8 = "*"
+flake8-bugbear = "*"
+isort = ">= 5"
+mock = "*"
+pre-commit = "*"
+pytest = ">= 6"  # needs pyproject.toml support
+
+[tool.isort]
+profile = "black"
+line_length = 100
+known_first_party = []
+
+[tool.black]
+line-length = 100
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  | profiling
+)/
+'''
+
+[tool.poetry-dynamic-versioning]
+enable = true
+vcs = "git"
+style = "semver"
+pattern = "^(?P<base>\\d+\\.\\d+\\.\\d+)(-?((?P<stage>[a-zA-Z]+)\\.?(?P<revision>\\d+)?))?$"
+
+[tool.poetry-dynamic-versioning.substitution]
+patterns = ["(^__version__\\s*=\\s*['\"])[^'\"]*(['\"])", "(^VERSION\\s*=\\s*['\"])[^'\"]*(['\"])"]
+
+
+[build-system]
+requires = ["poetry>=1.0.5"]
+build-backend = "poetry.masonry.api"

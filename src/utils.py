@@ -9,11 +9,11 @@ __email__ = "vegardsolberg@hotmail.com"
 
 from typing import List
 
-import plotly.graph_objects as go
-import numpy as np
 import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 import dash_html_components as html
+import numpy as np
+import plotly.graph_objects as go
 import seaborn as sns
 
 
@@ -32,9 +32,7 @@ def get_colors(N: int) -> List[str]:
 
 def make_circle_figure(N: int = 150, factor: int = 2) -> go.Figure:
     fig = go.Figure()
-    fig.add_shape(
-        type="circle", x0=-1, y0=-1, x1=1, y1=1, line_color="black", layer="below"
-    )
+    fig.add_shape(type="circle", x0=-1, y0=-1, x1=1, y1=1, line_color="black", layer="below")
 
     fig.update_layout(
         xaxis=dict(range=(-1.1, 1.1), zeroline=False),

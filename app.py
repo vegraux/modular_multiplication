@@ -7,18 +7,20 @@
 __author__ = "Vegard Ulriksen Solberg"
 __email__ = "vegardsolberg@hotmail.com"
 
+import logging
+
 import dash
-
-import dash_core_components as dcc
 import dash_bootstrap_components as dbc
+import dash_core_components as dcc
 import dash_html_components as html
-
-from src.utils import make_circle_figure, card_factor, card_max_count
 from dash.dependencies import Input, Output
+
+from src.utils import card_factor, card_max_count, make_circle_figure
 
 N = 200
 FACTOR = 2
 
+logger = logging.getLogger(__name__)
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 server = app.server
 header = dbc.Jumbotron(
@@ -39,13 +41,7 @@ layout = html.Div(
             ]
         ),
         dbc.Row(
-            [
-                dbc.Col(
-                    dcc.Graph(
-                        id="circle-fig", figure=make_circle_figure(N=N, factor=FACTOR)
-                    )
-                )
-            ]
+            [dbc.Col(dcc.Graph(id="circle-fig", figure=make_circle_figure(N=N, factor=FACTOR)))]
         ),
     ]
 )
