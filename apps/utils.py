@@ -9,11 +9,11 @@ __email__ = "vegardsolberg@hotmail.com"
 
 from typing import List
 
-import plotly.graph_objects as go
-import numpy as np
 import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 import dash_html_components as html
+import numpy as np
+import plotly.graph_objects as go
 import seaborn as sns
 
 
@@ -32,9 +32,7 @@ def get_colors(N: int) -> List[str]:
 
 def make_circle_figure(N: int = 150, factor: int = 2) -> go.Figure:
     fig = go.Figure()
-    fig.add_shape(
-        type="circle", x0=-1, y0=-1, x1=1, y1=1, line_color="black", layer="below"
-    )
+    fig.add_shape(type="circle", x0=-1, y0=-1, x1=1, y1=1, line_color="black", layer="below")
 
     fig.update_layout(
         xaxis=dict(range=(-1.1, 1.1), zeroline=False),
@@ -51,10 +49,7 @@ def make_circle_figure(N: int = 150, factor: int = 2) -> go.Figure:
     angles = np.linspace(0, 2 * np.pi, N + 1)
     angles_multiplied = (angles * factor) % (2 * np.pi)
     x, y = np.cos(angles[:-1]), np.sin(angles[:-1])
-    x_multiplied, y_multiplied = (
-        np.cos(angles_multiplied[:-1]),
-        np.sin(angles_multiplied[:-1]),
-    )
+    x_multiplied, y_multiplied = (np.cos(angles_multiplied[:-1]), np.sin(angles_multiplied[:-1]))
     marker_colors = get_colors(N)
     for i in range(N):
         fig.add_trace(
@@ -75,12 +70,9 @@ card_factor = [
     dbc.CardBody(
         [
             html.H5("Select factor of multiplication", className="card-title"),
-            html.P(
-                "The figure will change when the factor is changed",
-                className="card-text",
-            ),
+            html.P("The figure will change when the factor is changed", className="card-text"),
             dcc.Slider(
-                id="factor-slider",
+                id="circle-factor-slider",
                 min=2,
                 max=200,
                 step=0.1,
@@ -91,7 +83,7 @@ card_factor = [
     )
 ]
 
-card_max_count = [
+card_num_points = [
     dbc.CardBody(
         [
             html.H5("Select number of points on the circle", className="card-title"),
@@ -100,7 +92,7 @@ card_max_count = [
                 className="card-text",
             ),
             dcc.Slider(
-                id="max-count-slider",
+                id="circle-num-points-slider",
                 min=10,
                 max=400,
                 step=30,

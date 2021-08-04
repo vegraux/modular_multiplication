@@ -8,57 +8,41 @@ __author__ = "Vegard Ulriksen Solberg"
 __email__ = "vegardsolberg@hotmail.com"
 
 import dash
-
-import dash_core_components as dcc
 import dash_bootstrap_components as dbc
+import dash_core_components as dcc
 import dash_html_components as html
-
-from src.utils import make_circle_figure, card_factor, card_max_count
 from dash.dependencies import Input, Output
 
-N = 200
-FACTOR = 2
+from apps import circle, triangle
 
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = dash.Dash(
+    __name__, external_stylesheets=[dbc.themes.BOOTSTRAP], suppress_callback_exceptions=True
+)
 server = app.server
-header = dbc.Jumbotron(
-    [
-        html.H1("Modular multiplication", className="display-3"),
-        html.Hr(className="my-2"),
-        html.P("Drag the sliders and see what happens!"),
-    ]
-)
 
-layout = html.Div(
-    [
-        header,
-        dbc.Row(
-            [
-                dbc.Col(dbc.Card(card_factor, color="light", inverse=False)),
-                dbc.Col(dbc.Card(card_max_count, color="light", inverse=False)),
-            ]
-        ),
-        dbc.Row(
-            [
-                dbc.Col(
-                    dcc.Graph(
-                        id="circle-fig", figure=make_circle_figure(N=N, factor=FACTOR)
-                    )
-                )
-            ]
-        ),
-    ]
+navbar = dbc.NavbarSimple(
+    children=[
+        dbc.NavItem(dbc.NavLink("Circle", href="circle", active=True)),
+        dbc.NavItem(dbc.NavLink("Triangle", href="triangle")),
+    ],
+    brand="Modular multiplication",
+    brand_href="#",
+    color="primary",
+    dark=True,
 )
+layout = html.Div([dcc.Location(id="url", refresh=False), navbar, html.Div(id="page-content")])
 
 app.layout = dbc.Container(layout)
 
 
-@app.callback(
-    Output("circle-fig", "figure"),
-    [Input("max-count-slider", "value"), Input("factor-slider", "value")],
-)
-def update_data(N, factor):
-    return make_circle_figure(N=N, factor=factor)
+@app.callback(Output("page-content", "children"), Input("url", "pathname"))
+def display_page(pathname):
+    if (pathname == "/circle") or (pathname == "/"):
+        return circle.layout
+    elif pathname == "/triangle":
+        return triangle.layout
+    else:
+        return "404"
 
 
 if __name__ == "__main__":
