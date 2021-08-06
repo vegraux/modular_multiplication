@@ -13,8 +13,10 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
 
-from pages import circle, triangle
-from pages.utils import make_circle_figure, make_triangle_figure
+from pages import circle, square, triangle
+from pages.circle import make_circle_figure
+from pages.square import make_square_figure
+from pages.triangle import make_triangle_figure
 
 app = dash.Dash(
     __name__, external_stylesheets=[dbc.themes.BOOTSTRAP], suppress_callback_exceptions=True
@@ -24,6 +26,7 @@ navbar = dbc.NavbarSimple(
     children=[
         dbc.NavItem(dbc.NavLink("Circle", href="circle", style={"fontSize": 25})),
         dbc.NavItem(dbc.NavLink("Triangle", href="triangle", style={"fontSize": 25})),
+        dbc.NavItem(dbc.NavLink("Square", href="square", style={"fontSize": 25})),
     ],
     brand="Modular multiplication",
     brand_style={"fontSize": 40},
@@ -41,8 +44,13 @@ app.layout = dbc.Container(layout)
 def display_page(pathname):
     if (pathname == "/circle") or (pathname == "/"):
         return circle.layout
+
     elif pathname == "/triangle":
         return triangle.layout
+
+    elif pathname == "/square":
+        return square.layout
+
     else:
         return "404"
 
@@ -61,6 +69,14 @@ def update_circle_data(N, factor):
 )
 def update_triangle_data(num_points, stride):
     return make_triangle_figure(points_per_side=num_points, stride=stride)
+
+
+@app.callback(
+    Output("square-fig", "figure"),
+    [Input("square-num-points-slider", "value"), Input("square-factor-slider", "value")],
+)
+def update_square_data(num_points, stride):
+    return make_square_figure(points_per_side=num_points, stride=stride)
 
 
 if __name__ == "__main__":

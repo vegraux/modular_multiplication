@@ -11,8 +11,10 @@ __email__ = "vegardsolberg@hotmail.com"
 import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 import dash_html_components as html
+import numpy as np
+from plotly import graph_objects as go
 
-from pages.utils import make_circle_figure
+from pages.utils import get_colors, update_layout
 
 N = 200
 FACTOR = 2
@@ -52,6 +54,32 @@ circle_card_factor = [
         ]
     )
 ]
+
+
+def make_circle_figure(N: int = 150, factor: int = 2) -> go.Figure:
+    fig = go.Figure()
+    fig.add_shape(type="circle", x0=-1, y0=-1, x1=1, y1=1, line_color="black", layer="below")
+    update_layout(fig)
+    angles = np.linspace(0, 2 * np.pi, N + 1)
+    angles_multiplied = (angles * factor) % (2 * np.pi)
+    x, y = np.cos(angles[:-1]), np.sin(angles[:-1])
+    x_multiplied, y_multiplied = (np.cos(angles_multiplied[:-1]), np.sin(angles_multiplied[:-1]))
+    marker_colors = get_colors(N)
+    for i in range(N):
+        fig.add_trace(
+            go.Scattergl(
+                x=[x[i], x_multiplied[i]],
+                y=[y[i], y_multiplied[i]],
+                mode="lines",
+                marker={"color": marker_colors[i]},
+                line=dict(width=1),
+            )
+        )
+    title = f"<b>Multiplying by {factor} on a circle with {N} points</b>"
+    fig.update_layout(title=title)
+    return fig
+
+
 layout = html.Div(
     [
         html.Br(),
