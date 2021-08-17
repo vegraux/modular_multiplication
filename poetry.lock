@@ -131,6 +131,14 @@ version = "1.17.1"
 
 [[package]]
 category = "main"
+description = "Deferring loading of JS files until after React loads"
+name = "dash-defer-js-import"
+optional = false
+python-versions = "*"
+version = "0.0.2"
+
+[[package]]
+category = "main"
 description = "Vanilla HTML components for Dash"
 name = "dash-html-components"
 optional = false
@@ -597,7 +605,7 @@ version = "2.0.1"
 watchdog = ["watchdog"]
 
 [metadata]
-content-hash = "4b33a35261f3ab9694d42db12cbfcb607c066f4f74962d8ff433264477434e2e"
+content-hash = "20cd8ffb9abc87126d8cbe9e755617418485cc948b445c51fa61beef36943bf4"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -672,6 +680,9 @@ dash-bootstrap-components = [
 ]
 dash-core-components = [
     {file = "dash_core_components-1.17.1.tar.gz", hash = "sha256:7e503f5eddb63034dd20c23d218cc0d8a81ec88e9a15b7cbc60e266b0e2b60a9"},
+]
+dash-defer-js-import = [
+    {file = "dash_defer_js_import-0.0.2.tar.gz", hash = "sha256:403fef93d46535ed3ad4d5df0749136cfd1439d6956ff877b40dc47021df1e4a"},
 ]
 dash-html-components = [
     {file = "dash_html_components-1.1.4.tar.gz", hash = "sha256:dc4f423e13716d179d51a42b3c7e2a2ed02e05185c742f88214b58d59e24bbd4"},

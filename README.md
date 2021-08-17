@@ -4,7 +4,6 @@ Dash application for visualising modular multiplication
 
 Try the heroku app [here](https://modular-multiply.herokuapp.com/)
 ## Install
-This project uses [pipenv](https://pipenv-fork.readthedocs.io/en/latest/).
-Clone the repository, navigate to the folder and run `pipenv install`.
-This creates a virtual environment for the project. Run `app.py` to see the
-dashboard.
+This project uses [poetry](https://python-poetry.org/).
+Clone the repository, navigate to the folder and run `poetry install`.
+This creates a virtual environment for the project. Execute `app.py` run the dashboard locally.

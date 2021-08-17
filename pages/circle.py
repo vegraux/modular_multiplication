@@ -7,7 +7,6 @@
 __author__ = "Vegard Ulriksen Solberg"
 __email__ = "vegardsolberg@hotmail.com"
 
-
 import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 import dash_html_components as html
@@ -77,6 +76,23 @@ def make_circle_figure(N: int = 150, factor: int = 2) -> go.Figure:
         )
     title = f"<b>Multiplying by {factor} on a circle with {N} points</b>"
     fig.update_layout(title=title)
+    return fig
+
+
+def circle_example_figure():
+    N = 10
+    factor = 2
+    fig = make_circle_figure(N, factor)
+    for i in range(10):
+        angle = i * 2 * np.pi / N
+        x, y = np.cos(angle), np.sin(angle)
+        fig.add_annotation(x=x * 1.05, y=y * 1.05, text=i, showarrow=False, font=dict(size=16))
+    fig.update_layout(
+        height=730,
+        width=730,
+        xaxis=dict(range=(-1.06, 1.06), zeroline=False),
+        yaxis=dict(range=(-1.06, 1.06), zeroline=False),
+    )
     return fig
 
 
