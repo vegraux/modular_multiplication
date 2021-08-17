@@ -4,18 +4,7 @@ import dash_defer_js_import as dji
 import dash_html_components as html
 
 from pages.circle import circle_example_figure
-
-square_info_card = [
-    dbc.CardBody(
-        [
-            html.H5("Select stride of connecting node", className="card-title"),
-            html.P(
-                "The number of uniformly spaced points on the circle boundary",
-                className="card-text",
-            ),
-        ]
-    )
-]
+from pages.triangle import triangle_example_figure
 
 circle_text = r"""The circle figure is made by first partitioning the boundary into $N$ equally
 spaced points. Because the points on the circle are uniformly partitioned, each integer $i$ can be
@@ -37,12 +26,39 @@ circle_info_card = [
         [
             html.H3("Circle", className="card-title"),
             html.P(circle_text),
-            html.H5("Example"),
+            html.H5("Circle example"),
             circle_example,
             html.Br(),
             html.Br(),
             html.Div(
                 dcc.Graph(id="circle-example-fig", figure=circle_example_figure()),
+                className="container",
+                style={"maxWidth": "750px"},
+            ),
+        ]
+    )
+]
+
+triangle_text = r"""The triangle and square figure are not really related to multiplication, so I
+should probably change the name of this site. They are constructed by first selecting
+the number of points per edge $N$, which are labeled from 0, ..., N-1. Each point on an edge is
+connected to another point on the next edge moving counter clockwise, depending on the selected
+stride. Point $i$ is connected to point $i + stride$ on the next edge of the triangle/square
+"""
+triangle_example = r"""The following is an example where $N=3$ and $stride=1$
+"""
+
+square_info_card = [
+    dbc.CardBody(
+        [
+            html.H3("Triangle and square", className="card-title"),
+            html.P(triangle_text),
+            html.H5("Triangle/square example"),
+            triangle_example,
+            html.Br(),
+            html.Br(),
+            html.Div(
+                dcc.Graph(id="triangle-example-fig", figure=triangle_example_figure()),
                 className="container",
                 style={"maxWidth": "750px"},
             ),
@@ -61,8 +77,8 @@ layout = html.Div(
     [
         html.Br(),
         dbc.Card(circle_info_card, color="light", inverse=False),
+        html.Br(),
         dbc.Card(square_info_card, color="light", inverse=False),
-        dcc.Markdown("jeg er $N=3$", dangerously_allow_html=True),
         mathjax_script,
         axis_latex_script,
     ]

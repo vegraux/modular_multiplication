@@ -7,7 +7,6 @@
 __author__ = "Vegard Ulriksen Solberg"
 __email__ = "vegardsolberg@hotmail.com"
 
-
 import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 import dash_html_components as html
@@ -115,6 +114,30 @@ def make_triangle_figure(points_per_side: int, stride: int) -> go.Figure:
         f" {points_per_side} points on each side</b>"
     )
     fig.update_layout(title=title)
+    return fig
+
+
+def triangle_example_figure():
+    points_per_side = 3
+    stride = 1
+    fig = make_triangle_figure(points_per_side=points_per_side, stride=stride)
+    xs, ys = get_triangle_points(points_per_side)
+
+    for i, (x, y) in enumerate(zip(xs, ys)):
+        fig.add_annotation(
+            x=x * 1.08,
+            y=y * 1.08,
+            text=i % points_per_side,
+            showarrow=False,
+            font=dict(size=16),
+            yshift=10,
+        )
+    fig.update_layout(
+        height=730,
+        width=730,
+        xaxis=dict(range=(-1.1, 1.1), zeroline=False),
+        yaxis=dict(range=(-1.1, 1.1), zeroline=False),
+    )
     return fig
 
 

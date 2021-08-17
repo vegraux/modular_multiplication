@@ -10,7 +10,6 @@ __email__ = "vegardsolberg@hotmail.com"
 import dash
 import dash_bootstrap_components as dbc
 import dash_core_components as dcc
-import dash_defer_js_import as dji
 import dash_html_components as html
 from dash.dependencies import Input, Output
 
@@ -19,22 +18,11 @@ from pages.circle import make_circle_figure
 from pages.square import make_square_figure
 from pages.triangle import make_triangle_figure
 
-external_scripts = [
-    "https://code.jquery.com/jquery-3.2.1.slim.min.js",
-    "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js",
-    "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js",
-]
-
 app = dash.Dash(
-    __name__,
-    external_stylesheets=[dbc.themes.BOOTSTRAP],
-    suppress_callback_exceptions=True,
-    external_scripts=external_scripts,
+    __name__, external_stylesheets=[dbc.themes.BOOTSTRAP], suppress_callback_exceptions=True
 )
 
-mathjax_script = dji.Import(
-    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_SVG"
-)
+
 app.index_string = """
 <!DOCTYPE html>
 <html>
